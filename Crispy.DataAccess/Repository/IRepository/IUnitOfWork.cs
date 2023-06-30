@@ -8,6 +8,7 @@ namespace Crispy.DataAccess.Repository.IRepository
 {
     public interface IUnitOfWork
     {
+        ICompanyRepository Company {  get; }
         ICategoryRepository Category { get; }
         IProductRepository Product { get; } 
         void Save();

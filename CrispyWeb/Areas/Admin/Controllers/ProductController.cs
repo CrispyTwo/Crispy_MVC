@@ -1,12 +1,16 @@
 ﻿using Crispy.DataAccess.Repository.IRepository;
 using Crispy.Models;
 using Crispy.Models.ViewModels;
+using Crispy.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Data;
 
 namespace CrispyWeb.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = SD.RoleAdmin)]
     public class ProductController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;

@@ -11,8 +11,10 @@ namespace Crispy.DataAccess.Data
         {
               
         }
+        public DbSet<Company> Company { get; set; }
         public DbSet<Category> Category { get; set; }
         public DbSet<Product> Product { get; set; }
+        public DbSet<ApplicationUser> User { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

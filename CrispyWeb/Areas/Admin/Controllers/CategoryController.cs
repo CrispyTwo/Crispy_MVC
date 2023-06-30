@@ -2,12 +2,15 @@
 using Crispy.DataAccess.Data;
 using Crispy.DataAccess.Repository.IRepository;
 using Crispy.Models;
+using Crispy.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CrispyWeb.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = SD.RoleAdmin)]
     public class CategoryController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
