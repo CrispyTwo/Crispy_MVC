@@ -11,6 +11,7 @@ namespace Crispy.DataAccess.Data
         {
               
         }
+        public DbSet<ShoppingCart> ShoppingCart { get; set; }
         public DbSet<Company> Company { get; set; }
         public DbSet<Category> Category { get; set; }
         public DbSet<Product> Product { get; set; }

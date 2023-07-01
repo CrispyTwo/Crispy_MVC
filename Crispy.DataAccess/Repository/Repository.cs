@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Crispy.DataAccess.Data;
 using Crispy.DataAccess.Repository.IRepository;
 using Microsoft.EntityFrameworkCore;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Crispy.DataAccess.Repository
 {
@@ -21,10 +22,18 @@ namespace Crispy.DataAccess.Repository
         }
         public void Add(T entity) => _dbSet.Add(entity);
 
-        public T Get(Expression<Func<T, bool>> filter, string? includeProperties = null)
+        public T Get(Expression<Func<T, bool>> filter, string? includeProperties = null, bool tracked = false)
         {
-            IQueryable<T> query = _dbSet;
-            query =  query.Where(filter);
+            IQueryable<T> query;
+            if (tracked)
+            {
+                 query = _dbSet;
+            }
+            else
+            {
+                 query = _dbSet.AsNoTracking();
+            }
+            query = query.Where(filter);
             if (!string.IsNullOrEmpty(includeProperties))
             {
                 foreach (var includeProp in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
