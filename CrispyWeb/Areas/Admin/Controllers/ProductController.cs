@@ -9,7 +9,7 @@ using System.Data;
 
 namespace CrispyWeb.Areas.Admin.Controllers
 {
-    [Area("Admin")]
+    [Area(nameof(Admin))]
     [Authorize(Roles = SD.RoleAdmin)]
     public class ProductController : Controller
     {
