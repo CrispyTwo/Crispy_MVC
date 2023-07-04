@@ -20,5 +20,32 @@ namespace Crispy.DataAccess.Repository
         {
             _db.OrderHeader.Update(obj);
         }
+
+        public void UpdateStatus(int id, string orderStatus, string? paymentStatus = null)
+        {
+            var orderFromDb = _db.OrderHeader.FirstOrDefault(x => x.Id == id);
+            if (orderFromDb != null)
+            {
+                orderFromDb.OrderStatus = orderStatus;
+                if (!string.IsNullOrEmpty(paymentStatus))
+                {
+                    orderFromDb.PaymentStatus = paymentStatus;
+                }
+            }
+        }
+
+        public void UpdateStripePaymentId(int id, string sessionId, string paymentIndentId)
+        {
+            var orderFromDb = _db.OrderHeader.FirstOrDefault(x => x.Id == id);
+            if (!string.IsNullOrEmpty(sessionId))
+            {
+                orderFromDb.SessionId = sessionId;
+            }
+            if (!string.IsNullOrEmpty(paymentIndentId))
+            {
+                orderFromDb.PaymentIntendId = paymentIndentId;
+                orderFromDb.PaymentDate = DateTime.Now;
+            }
+        }
     }
 }
