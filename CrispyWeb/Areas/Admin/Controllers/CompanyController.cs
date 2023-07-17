@@ -56,21 +56,7 @@ namespace CrispyWeb.Areas.Admin.Controllers
                 return View(company);
             }
         }
-        //public IActionResult Delete(int? id)
-        //{
-        //    Company? obj = _unitOfWork.Company.Get(x => x.Id == id);
-        //    if (obj is null) return NotFound();
-        //    if (!string.IsNullOrEmpty(obj.ImageURL))
-        //    {
-        //        var oldPath = Path.Combine(_webHostEnvironment.WebRootPath, obj.ImageURL.TrimStart('\\'));
-        //        if (System.IO.File.Exists(oldPath))
-        //            System.IO.File.Delete(oldPath);
-        //    }
-        //    _unitOfWork.Company.Remove(obj);
-        //    _unitOfWork.Save();
-        //    TempData["success"] = "Company has been deleted";
-        //    return RedirectToAction("Index");
-        //}
+        
         #region APICalls
         [HttpGet]
         public IActionResult GetAll()
