@@ -163,6 +163,7 @@ namespace CrispyWeb.Areas.Customer.Controllers
                     _unitOfWork.OrderHeader.UpdateStatus(id, SD.StatusApproved, SD.PaymentStatusApproved);
                     _unitOfWork.Save();
                 }
+                HttpContext.Session.Clear();
             }
 
             List<ShoppingCart> shoppingCarts = _unitOfWork.ShoppingCart
@@ -183,9 +184,10 @@ namespace CrispyWeb.Areas.Customer.Controllers
         }
         public IActionResult Minus(int cartId)
         {
-            var cart = _unitOfWork.ShoppingCart.Get(x => x.Id == cartId);
+            var cart = _unitOfWork.ShoppingCart.Get(x => x.Id == cartId, tracked: true);
             if (cart.Count <= 1)
             {
+                HttpContext.Session.SetInt32(SD.SessionCart, _unitOfWork.ShoppingCart.GetAll(x => x.ApplicationUserId == cart.ApplicationUserId).Count() - 1);
                 _unitOfWork.ShoppingCart.Remove(cart);
             }
             else
@@ -198,11 +200,14 @@ namespace CrispyWeb.Areas.Customer.Controllers
         }
         public IActionResult Remove(int cartId)
         {
-            var cart = _unitOfWork.ShoppingCart.Get(x => x.Id == cartId);
+            var cart = _unitOfWork.ShoppingCart.Get(x => x.Id == cartId, tracked: true);
 
             _unitOfWork.ShoppingCart.Remove(cart);
 
+            HttpContext.Session.SetInt32(SD.SessionCart, _unitOfWork.ShoppingCart.GetAll(x => x.ApplicationUserId == cart.ApplicationUserId).Count() - 1);
+
             _unitOfWork.Save();
+
             return RedirectToAction(nameof(Index));
         }
         public double GetPriceBasedOnQuantity(ShoppingCart cart)

@@ -1,7 +1,9 @@
 ﻿using Crispy.DataAccess.Repository;
 using Crispy.DataAccess.Repository.IRepository;
 using Crispy.Models;
+using Crispy.Utility;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using System.Security.Claims;
@@ -42,16 +44,20 @@ namespace CrispyWeb.Areas.Customer.Controllers
             cart.ApplicationUserId = userId;
 
             ShoppingCart cartFromDb = _unitOfWork.ShoppingCart.Get(x => x.ApplicationUserId == userId && x.ProductId == cart.ProductId);
-            if(cartFromDb != null)
+            if (cartFromDb != null)
             {
                 cartFromDb.Count += cart.Count;
                 _unitOfWork.ShoppingCart.Update(cartFromDb);
+                _unitOfWork.Save();
+
             }
             else
             {
                 _unitOfWork.ShoppingCart.Add(cart);
+                _unitOfWork.Save();
+                HttpContext.Session.SetInt32(SD.SessionCart,
+                    _unitOfWork.ShoppingCart.GetAll(x => x.ApplicationUserId == userId).Count());
             }
-            _unitOfWork.Save();
 
             return RedirectToAction(nameof(Index));
         }

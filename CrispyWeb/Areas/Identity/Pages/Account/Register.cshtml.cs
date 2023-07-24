@@ -108,11 +108,11 @@ namespace CrispyWeb.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+            public string? Role { get; set; }
             [ValidateNever]
             public IEnumerable<SelectListItem> RoleList { get; internal set; }
             [Required]
             public string? Name { get; set; }
-            public string? Role { get; set; }
             public string? Country { get; set; }
             public string? Region { get; set; }
             public string? City { get; set; }
@@ -201,7 +201,14 @@ namespace CrispyWeb.Areas.Identity.Pages.Account
                     }
                     else
                     {
-                        await _signInManager.SignInAsync(user, isPersistent: false);
+                        if(User.IsInRole(SD.RoleEmployee) || User.IsInRole(SD.RoleAdmin))
+                        {
+                            TempData["success"] = "New User Created Successfully";
+                        }
+                        else
+                        {
+                            await _signInManager.SignInAsync(user, isPersistent: false);
+                        }
                         return LocalRedirect(returnUrl);
                     }
                 }
