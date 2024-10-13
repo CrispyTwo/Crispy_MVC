@@ -41,8 +41,8 @@ namespace Crispy.DataAccess.DBInitializer
 
                 _userManager.CreateAsync(new ApplicationUser
                 {
-                    UserName = "krj270111@gmail.com",
-                    Email = "krj270111@gmail.com",
+                    UserName = "Admin@gmail.com",
+                    Email = "Admin@gmail.com",
                     Name = "Artem Huzhvii",
                     PhoneNumber = "1112223333",
                     Street = "test 123 Ave",
@@ -50,8 +50,8 @@ namespace Crispy.DataAccess.DBInitializer
                     Country = "USA",
                     City = "Chicago",
                     EmailConfirmed = true
-                }, "130484***Ar").GetAwaiter().GetResult();
-                ApplicationUser user = _db.User.FirstOrDefault(x => x.Email == "krj270111@gmail.com");
+                }, "Admin123*").GetAwaiter().GetResult();
+                ApplicationUser user = _db.User.FirstOrDefault(x => x.Email == "Admin@gmail.com");
                 _userManager.AddToRoleAsync(user, SD.RoleAdmin).GetAwaiter().GetResult();
             }
             return;
