@@ -193,7 +193,7 @@ namespace CrispyWeb.Areas.Admin.Controllers
             switch (status)
             {
                 case "pending":
-                    objOrderHeader = objOrderHeader.Where(x => x.PaymentStatus == SD.PaymentStatusDelayedPayment);
+                    objOrderHeader = objOrderHeader.Where(x => x.PaymentStatus == SD.StatusPending);
                     break;
                 case "inprocess":
                     objOrderHeader = objOrderHeader.Where(x => x.PaymentStatus == SD.StatusInProcess);
