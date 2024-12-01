@@ -62,7 +62,14 @@ namespace CrispyWeb.Areas.Customer.Controllers
                 ShoppingCartVM.OrderHeader.OrderTotal += (item.Price * item.Count);
             }
 
-            return View(ShoppingCartVM);
+            if (Request.Headers.Accept.ToString().Contains("application/json"))
+            {
+                return Json(ShoppingCartVM);
+            }
+            else
+            {
+                return View(ShoppingCartVM);
+            }
         }
 
         [HttpPost]
@@ -147,7 +154,15 @@ namespace CrispyWeb.Areas.Customer.Controllers
                 Response.Headers.Add("Location", session.Url);
                 return new StatusCodeResult(303);
             }
-            return RedirectToAction(nameof(OrderConfirmation), new { id = ShoppingCartVM.OrderHeader.Id });
+
+            if (Request.Headers.Accept.ToString().Contains("application/json"))
+            {
+                return Json(ShoppingCartVM);
+            }
+            else
+            {
+                return RedirectToAction(nameof(OrderConfirmation), new { id = ShoppingCartVM.OrderHeader.Id });
+            }
         }
         public IActionResult OrderConfirmation(int id)
         {

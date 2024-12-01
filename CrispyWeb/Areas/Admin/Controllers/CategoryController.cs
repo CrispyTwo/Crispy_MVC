@@ -1,5 +1,4 @@
-﻿
-using Crispy.DataAccess.Data;
+﻿using Crispy.DataAccess.Data;
 using Crispy.DataAccess.Repository.IRepository;
 using Crispy.Models;
 using Crispy.Utility;

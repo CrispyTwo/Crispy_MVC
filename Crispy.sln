@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crispy.Models", "Crispy.Mod
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crispy.Utility", "Crispy.Utility\Crispy.Utility.csproj", "{8AEC3916-12B3-4DF9-9617-5A0DB2674E8F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crispy.Tests", "Crispy.Tests\Crispy.Tests.csproj", "{7A2B7AA3-9A81-4845-B096-F09FBD2809DE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{8AEC3916-12B3-4DF9-9617-5A0DB2674E8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8AEC3916-12B3-4DF9-9617-5A0DB2674E8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8AEC3916-12B3-4DF9-9617-5A0DB2674E8F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A2B7AA3-9A81-4845-B096-F09FBD2809DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A2B7AA3-9A81-4845-B096-F09FBD2809DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A2B7AA3-9A81-4845-B096-F09FBD2809DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A2B7AA3-9A81-4845-B096-F09FBD2809DE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,12 +1,14 @@
 ﻿using Crispy.DataAccess.Repository;
 using Crispy.DataAccess.Repository.IRepository;
 using Crispy.Models;
+using Crispy.Models.ViewModels;
 using Crispy.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using System.Security.Claims;
+using System.Text.Json;
 
 namespace CrispyWeb.Areas.Customer.Controllers
 {
@@ -20,11 +22,20 @@ namespace CrispyWeb.Areas.Customer.Controllers
             _logger = logger;
             _unitOfWork = unitOfWork;
         }
+        [HttpGet]
         public IActionResult Index()
         {
             var productsList = _unitOfWork.Product.GetAll(includeProperties: "Category");
-            return View(productsList);
+            if (Request.Headers.Accept.ToString().Contains("application/json"))
+            {
+                return Json(productsList);
+            }
+            else
+            {
+                return View(productsList);
+            }
         }
+
         public IActionResult Details(int id)
         {
             ShoppingCart shoppingCart = new()
@@ -33,7 +44,15 @@ namespace CrispyWeb.Areas.Customer.Controllers
                 Count = 1,
                 ProductId = id
             };
-            return View(shoppingCart);
+
+            if (Request.Headers.Accept.ToString().Contains("application/json"))
+            {
+                return Json(shoppingCart);
+            }
+            else
+            {
+                return View(shoppingCart);
+            }
         }
         [HttpPost]
         [Authorize]
@@ -59,8 +78,16 @@ namespace CrispyWeb.Areas.Customer.Controllers
                     _unitOfWork.ShoppingCart.GetAll(x => x.ApplicationUserId == userId).Count());
             }
 
-            return RedirectToAction(nameof(Index));
+            if (Request.Headers.Accept.ToString().Contains("application/json"))
+            {
+                return Json(cart);
+            }
+            else
+            {
+                return RedirectToAction(nameof(Index));
+            }
         }
+
         public IActionResult Privacy()
         {
             return View();
