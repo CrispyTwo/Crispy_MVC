@@ -20,7 +20,15 @@ namespace CrispyWeb.Areas.Admin.Controllers
         public IActionResult Index()
         {
             var objCategoryList = _unitOfWork.Category.GetAll().ToList();
-            return View(objCategoryList);
+
+            if (Request.Headers.Accept.ToString().Contains("application/json"))
+            {
+                return Json(objCategoryList);
+            }
+            else
+            {
+                return View(objCategoryList);
+            }
         }
         public IActionResult Create()
         {
@@ -36,7 +44,15 @@ namespace CrispyWeb.Areas.Admin.Controllers
                 _unitOfWork.Category.Add(obj);
                 _unitOfWork.Save();
                 TempData["success"] = "Category has been created";
-                return RedirectToAction("Index");
+
+                if (Request.Headers.Accept.ToString().Contains("application/json"))
+                {
+                    return Json(obj);
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+                }
             }
             return View();
         }

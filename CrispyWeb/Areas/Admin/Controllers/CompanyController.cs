@@ -49,7 +49,15 @@ namespace CrispyWeb.Areas.Admin.Controllers
                     _unitOfWork.Company.Update(company);
                 _unitOfWork.Save();
                 TempData["success"] = company.Id is 0 ? "Company has been created" : "Company has been updated";
-                return RedirectToAction("Index");
+
+                if (Request.Headers.Accept.ToString().Contains("application/json"))
+                {
+                    return Json(company);
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+                }
             }
             else
             {

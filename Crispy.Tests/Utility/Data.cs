@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json.Linq;
 using System.Net;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Text.Json;
 
 namespace Crispy.Tests.Utility
@@ -66,7 +67,13 @@ namespace Crispy.Tests.Utility
         }
         internal int GetCategoriesCount()
         {
+            _dbContext.ChangeTracker.Clear();
             return _dbContext.Category.ToArrayAsync().GetAwaiter().GetResult().Length;
+        }
+        internal int GetCompaniesCount()
+        {
+            _dbContext.ChangeTracker.Clear();
+            return _dbContext.Company.ToArrayAsync().GetAwaiter().GetResult().Length;
         }
         internal async Task<int> CreateShoppingCart(int productId, bool forceCreate = false, int newCount = 3)
         {
@@ -145,6 +152,19 @@ namespace Crispy.Tests.Utility
 
                 Assert.That(assignRoleTask.Succeeded, Is.True);
             }
+        }
+        public string  GenerateRandomString(int length = 10)
+        {
+            const string chars = "abcdefghijklmnopqrstuvwxyz";
+            var random = new Random();
+            var result = new StringBuilder(length);
+
+            for (int i = 0; i < length; i++)
+            {
+                result.Append(chars[random.Next(chars.Length)]);
+            }
+
+            return result.ToString();
         }
         public Dictionary<string, string> FlattenJson(string json, string prefix = "", string excludeKey = "")
         {
